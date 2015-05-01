@@ -1,0 +1,19 @@
+<div class="febworms-edit-palette-categories">
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Field Category : {{ categoryName }}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="(name, category) in categories" ng-class="{ 'active': categoryName === name }">
+                <a ng-click="setCategory(name, category)">
+                    {{ name }}
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li ng-class="{ 'active': !category }">
+                <a ng-click="setCategory()">All field types</a>
+            </li>
+         </ul>
+    </div>
+</div>

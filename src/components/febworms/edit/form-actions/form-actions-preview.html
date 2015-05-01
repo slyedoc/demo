@@ -1,0 +1,19 @@
+<div ng-if="actionsEnabled">
+    <div ng-if="debugInfoEnabled">
+        <div class="control-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="debugFormData"> Display form data information
+                </label>
+            </div>
+        </div>
+        <tabset ng-if="debugFormData">
+            <tab heading="Form data">
+                <div jsonify="model.data"></div>
+            </tab>
+            <tab heading="Form status">
+                <div jsonify="model.state" jsonify-display-hidden="true"></div>
+            </tab>
+        </tabset>
+    </div>
+</div>

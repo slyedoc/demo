@@ -1,0 +1,12 @@
+<div ng-if="actionsEnabled">
+    <div ng-if="debugInfoEnabled">
+        <div class="control-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="debugSchema"> Display schema information
+                </label>
+            </div>
+        </div>
+        <div ng-if="debugSchema" data-jsonify="schema"></div>
+    </div>
+</div>

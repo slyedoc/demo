@@ -1,0 +1,7 @@
+<div class="form-group" ng-class="{ 'has-error': fieldPropertiesForm[fieldName].$invalid }">
+    <label class="col-md-2 control-label">{{ fieldLabel }}</label>
+    <div class="col-md-10">
+        <div ng-transclude></div>
+        <div febworms-validation-summary="{{ fieldName }}"></div>
+    </div>
+</div>

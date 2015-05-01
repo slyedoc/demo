@@ -1,0 +1,184 @@
+<div class="row bs-grid">
+
+    <!-- Options -->
+    <div class="col-sm-9">
+        <div dropdown>
+
+            <!-- Options button -->
+            <button class="btn btn-default"
+                    dropdown-toggle
+                    ng-class="{ 'btn-sm': options.pageSizeShow, 'btn-xs': !options.pageSizeShow  }"
+                    translate="BSGRID.BUTTON_OPTIONS">
+
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+
+
+                <!-- Page size -->
+                <li ng-if="options.pageSizeShow" role="presentation" class="dropdown-header" translate>BSGRID.PAGESIZE</li>
+                <li ng-if="options.pageSizeShow" ng-repeat="size in options.pageSizeOptions" ng-class="{'active': options.pageSize === size }">
+                    <a tabindex="-1" ng-click="options.pageSize = size">{{ size
+                        }}</a>
+                </li>
+                <li ng-if="options.pageSizeShow" role="presentation" class="divider"></li>
+
+
+                <!-- Show/Hide Columns -->
+                <li role="presentation" class="dropdown-header" translate>BSGRID.COLUMNS</li>
+                <li ng-repeat="col in options.columns">
+                    <a ng-click="hideColumn(col)">
+                        <i ng-class="col.visible ? 'glyphicon glyphicon-ok': 'glyphicon glyphicon-remove'"></i>
+                        <span ng-if="col.translate" translate>{{col.name}}</span>
+                        <span ng-if="!col.translate">{{ col.name }} </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Search -->
+    <div ng-if="options.showSearch" class="col-sm-3" style="margin-bottom: 10px" ng-class="{ 'col-sm-offset-9': !options.pageSizeShow }">
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="{{'BSGRID.LABEL_SEARCH' | translate}}"
+                   ng-model="options.searchFilter"
+                   ng-change="filter()"/>
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+        </div>
+    </div>
+
+
+    <!-- Grid -->
+    <div class=" col-md-12 " ng-class="{'table-responsive': options.scrollHorizontal}">
+        <table class="table table-striped table-bordered table-hover table-condensed color2">
+            <thead>
+                <tr>
+
+                    <!-- Select All checkbox-->
+                    <th ng-if="options.multiSelect " class="bs-grid-select">
+                        <input ng-if="options.multiSelect" type="checkbox" ng-model="selectAllToggle"
+                               ng-change="toggleSelectAll(selectAllToggle)">
+                    </th>
+
+
+                    <!-- Columns Headers -->
+                    <th class="bs-grid-overflow" ng-repeat="col in options.columns" ng-click="sort(col, true)"
+                        style="width: {{ col.width }};" ng-show="col.visible">
+                        <div ng-drop="true" ng-drop-success="onDropComplete($index, $data, $evt)">
+                            <div ng-drag="true" ng-drag-data="col">
+                                <span ng-if="col.translate" translate>{{ col.name || col.field }} </span>
+                                <span ng-if="!col.translate">{{ col.name || col.field }} </span>
+                            <span ng-if="col.sorted" class="order" ng-class="{'dropup': col.reverse }">
+                                <span class="caret"></span>
+                            </span>
+                            </div>
+                        </div>
+
+                        <!--TODO: replace this with a single icon-->
+                        <!--<span ng-if="!col.sorted && col.sortable" class="order">-->
+                        <!--<span class="caret"></span>-->
+                        <!--</span>-->
+                        <!--<span ng-if="!col.sorted && col.sortable" class="order dropup">-->
+                        <!--<span class="caret"></span>-->
+                        <!--</span>-->
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <!-- Rows -->
+                <tr ng-repeat="item in displayedItems"
+                    ng-class="{'info' : isSelectedItem( item ) }"
+                    ng-click="selectItem(item)">
+
+                    <td ng-if="options.multiSelect">
+                        <input type="checkbox" class="bg-grid-checkbox" ng-checked="isSelectedItem(item)"
+                               ng-click="selectItemCheckbox($event, item)">
+                    </td>
+
+                    <!-- Cells -->
+                    <td class="bs-grid-overflow" ng-repeat="col in options.columns" ng-show="col.visible">
+                        <div ng-if="col.template" bs-grid-cell-template="{{ col.template }}">
+                        </div>
+                        <div ng-if="!col.template" class="bs-grid-column bs-grid-column-{{col.field}}">
+                            {{ item[col.field] }}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div ng-if="options.showFooter" class="col-md-12">
+
+        <!-- Statistic -->
+        <div class="col-sm-4">
+            <div class="row">
+                <span ng-if="options.selectedItems.length != 0" translate="BSGRID.SELECTED_STATS"
+                      translate-values="{ num: options.selectedItems.length }"></span>
+                <span ng-class="{ 'text-danger': displayedItems.length == 0}" translate="BSGRID.DISPLAY_STATS"
+                      translate-values="{ begin: showing.begin, end: showing.end, of: showing.of }"></span>
+            </div>
+            <div class="row">
+                <span ng-if="options.searchFilter" translate="BSGRID.FILTERED_STATS"
+                      translate-value-of="{{options.items.length}}"></span>
+            </div>
+        </div>
+
+
+        <!-- Pagination -->
+        <div class="col-sm-8">
+            <pagination class="pagination-sm pull-right color2" boundary-links="true"
+                        max-size="9"
+                        items-per-page="options.pageSize"
+                        total-items="filteredItems.length"
+                        ng-model="options.currentPage"
+                        ng-change="getPage()"
+                        previous-text="{{'BSGRID.PAGE_PREVIOUS' | translate}}"
+                        next-text="{{'BSGRID.PAGE_NEXT' | translate}}"
+                        first-text="{{'BSGRID.PAGE_FIRST' | translate}}"
+                        last-text="{{'BSGRID.PAGE_LAST' | translate}}"
+                ></pagination>
+        </div>
+
+    </div>
+
+
+    <!-- Export -->
+    <div class="col-sm-9" ng-if="options.showExportButton">
+        <div dropdown>
+
+            <button class="btn btn-default btn-sm" type="button" dropdown-toggle translate>
+                BSGRID.BUTTON_EXPORT
+                <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" role="menu">
+
+                <!-- Filtered -->
+                <li role="presentation" class="dropdown-header">
+                    <a tabindex="-1" translate ng-click="Export(exportTypes.FILTERED)">BSGRID.EXPORT_FILTERED</a>
+                </li>
+
+                <!-- Selected -->
+                <li role="presentation" class="dropdown-header" ng-if="options.selectedItems[0]">
+                    <a translate ng-click="Export(exportTypes.SELECTED)">BSGRID.EXPORT_SELECTED</a>
+                </li>
+
+                <!-- All -->
+                <li role="presentation" class="dropdown-header">
+                    <a translate ng-click="Export(exportTypes.ALL)">BSGRID.EXPORT_ALL</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>
+
+

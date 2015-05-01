@@ -1,0 +1,40 @@
+<div class="febworms-edit">
+    <div ng-if="!preview">
+        <tabset>
+            <tab heading="Designer">
+                <div ng-if="actionsEnabled" febworms-edit-form-actions-designer></div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div febworms-form
+                             febworms-no-render="true"
+                             febworms-edit-canvas></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div febworms-edit-palette
+                             febworms-form
+                             febworms-no-render="true"></div>
+                    </div>
+                </div>
+            </tab>
+            <tab heading="Preview">
+                <div ng-if="actionsEnabled" febworms-edit-form-actions-preview></div>
+
+                <form name="model.state"
+                      febworms-form
+                      febworms-form-data="model.data"
+                      class="form-horizontal"
+                      novalidate>
+                </form>
+            </tab>
+        </tabset>
+    </div>
+    <div ng-if="preview">
+        <div ng-if="actionsEnabled" febworms-edit-form-actions-preview></div>
+        <form name="model.state"
+              febworms-form
+              febworms-form-data="model.data"
+              class="form-horizontal"
+              novalidate>
+        </form>
+    </div>
+</div>

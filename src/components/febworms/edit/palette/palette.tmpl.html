@@ -1,0 +1,26 @@
+<div class="febworms-edit-palette">
+    <div class="form-horizontal">
+        <fieldset>
+
+            <legend>Palette</legend>
+
+            <div febworms-edit-palette-categories data-category="selectedCategory"></div>
+            <div ng-repeat="template in templates | filter:templateFilter" class="well"
+                 dq-draggable="febworms-edit-canvas" dq-drag-begin="{ source: 'palette', field: template }">
+
+                <div class="btn-toolbar">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default btn-sm" type="button" ng-click="schemaCtrl.addField(template)">Add</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div febworms-field="template" 
+                         febworms-tab-index="-1" 
+                         febworms-no-validation-summary="true"
+                         febworms-edit-mode="true"></div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<!-- 
+  input fields marked as febworms-field-redraw will cause the initial value input to redraw
+-->
+
+<!-- minlength -->
+<div ng-if="fields.minlength" class="febworms-property-field-validation">
+    <div febworms-property-field="minlength"
+         febworms-property-field-label="Minimum length">
+        <input class="form-control"
+               type="text"
+               febworms-field-redraw
+               febworms-input-number
+               title="The minimum length of characters that should be entered."
+               name="minlength"
+               ng-model="field.validation.minlength"/>
+    </div>
+
+    <div ng-if="field.validation.minlength >= 1">
+        <div febworms-edit-validation-message="minlength"></div>
+    </div>
+</div>
+
+<!-- maxlength -->
+<div ng-if="fields.maxlength" class="febworms-property-field-validation">
+    <div febworms-property-field="maxlength"
+         febworms-property-field-label="Maximum length">
+        <input class="form-control"
+               type="text"
+               febworms-field-redraw
+               febworms-input-number
+               title="The maximum length of characters that should be entered."
+               name="maxlength"
+               ng-model="field.validation.maxlength"/>
+    </div>
+
+    <div ng-if="field.validation.maxlength >= 1">
+        <div febworms-edit-validation-message="maxlength"></div>
+    </div>
+</div>
+
+<!-- pattern -->
+<div ng-if="fields.pattern" class="febworms-property-field-validation">
+    <div febworms-property-field="pattern"
+         febworms-property-field-label="Pattern">
+        <div class="input-group">
+
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Prebuilt<span class="caret"></span></button>
+                <ul ng-if="patternOptions.length" class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li ng-repeat="item in patternOptions" ng-class="{ active: item.value === field.validation.pattern }">
+                        <a href="" ng-click="field.validation.pattern = item.value">{{ item.text || item.value }}</a>
+                    </li>
+                </ul>
+            </div>
+            <input type="text" class="form-control" ng-model="field.validation.pattern">
+        </div>
+    </div>
+    <div ng-if="field.validation.pattern.length > 0">
+        <div febworms-edit-validation-message="pattern"></div>
+    </div>
+</div>
+
+<!-- required -->
+<div ng-if="fields.required" class="febworms-property-field-validation">
+    <div class="checkbox" febworms-property-field="required">
+        <label title="Indicates if a value is required for this field.">
+            <input type="checkbox" ng-model="field.validation.required"/>Required
+        </label>
+    </div>
+
+    <div ng-if="field.validation.required">
+        <div febworms-edit-validation-message="required"></div>
+    </div>
+</div>

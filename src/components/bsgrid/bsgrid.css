@@ -1,0 +1,30 @@
+bs-grid  .pagination {
+    margin-top: 0px;
+}
+
+bs-grid table  {
+    /*table-layout: fixed;*/
+
+}
+
+.bs-grid-select {
+    width: 25px;
+
+}
+
+.bs-grid-select-disable {
+    /*pointer-events:none;*/
+}
+
+.bs-grid-overflow {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.bs-grid {
+    padding-top: 10px;
+}
+
+.bs-grid-column {
+    cursor: default;
+}

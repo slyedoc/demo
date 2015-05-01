@@ -1,0 +1,12 @@
+<div class="radio form-control input-md" ng-repeat="option in field.schema.options" title="{{ field.schema.tooltip }}">
+    <label >
+        <input febworms-field-input
+               type="radio"
+               name="{{ field.schema.name }}[]"
+               tabindex="{{ tabIndex }}"
+               value="{{ option.value }}"
+               ng-model="form.data[field.schema.name]"
+               ng-disabled="febwormsDisabled">
+        <span>{{option.text || option.value}}</span>
+    </label>
+</div>

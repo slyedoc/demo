@@ -1,0 +1,11 @@
+0<div class="checkbox form-control input-md">
+    <label title="{{ field.schema.tooltip }}">
+        <input febworms-field-input
+               id="{{ field.$_id }}"
+               type="checkbox"
+               tabindex="{{ tabIndex }}"
+               ng-model="form.data[field.schema.name]"
+               ng-disabled="febwormsDisabled">
+        <span ng-if="field.schema.nolabel">{{ field.schema.displayName }}</span>
+    </label>
+</div>
