@@ -1,0 +1,23 @@
+<div class="jumbotron text-center">
+    <h1>Mortgage Calculator</h1>
+</div>
+<div class="row">
+
+    <div class="col-md-6">
+        <form novalidate>
+            <formly-form model="vm.data" fields="vm.formFields">
+            </formly-form>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <img class="pull-right" ng-src="assets/images/{{awesomeThing.logo}}" alt="{{awesomeThing.title}}">
+            <div class="caption">
+                <h3> Total </h3>
+
+                <span class="h3 text-info">{{ vm.total |  number:2 }}</span>
+            </div>
+        </div>
+    </div>
+
+</div>

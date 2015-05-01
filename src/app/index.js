@@ -13,7 +13,9 @@ angular
         'pascalprecht.translate',
         'ui.bootstrap',
         'ngDraggable',
-        'febworms'
+        'febworms',
+        'formly',
+        'formlyBootstrap'
     ])
     .config(function ($stateProvider, $urlRouterProvider, localStorageServiceProvider, $translateProvider) {
 
@@ -60,6 +62,11 @@ angular
                 url: '/forms',
                 templateUrl: 'app/forms/forms.html',
                 controller: 'FormsCtrl'
+            })
+            .state('mortgage', {
+                url: '/mortgage',
+                templateUrl: 'app/mortgage/mortgage.html',
+                controller: 'MortgageCtrl as vm'
             });
         $urlRouterProvider.otherwise('/');
 
