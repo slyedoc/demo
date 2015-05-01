@@ -38,11 +38,6 @@ angular.module('app')
                     type: "number",
                     required: true
                 },
-                "validators": {
-                    "min": {
-                        "message": "\"This username is already taken.\""
-                    }
-                },
                 watcher: {
                     listener: function(field, newValue, oldValue, scope, stopWatching) {
                         vm.updateTotal();
